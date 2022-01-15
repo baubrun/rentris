@@ -12,6 +12,7 @@ import {
   showToaster,
 } from "../../../redux/layoutSlice";
 import { STATUS_ERROR } from "../../../shared/constants/status";
+import { propertyQuery } from "../../../services/helper";
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,7 +23,7 @@ const Home: React.FC = () => {
     try {
       dispatch(showLoader());
       const result = await propertyService.getProperties(
-        `/properties/list?locationExternalIDs=5002&purpose=${propertyType}&hitsPerPage=6`
+        propertyQuery({ purpose: propertyType })
       );
       cb(result);
     } catch (err: any) {
@@ -42,9 +43,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <Box 
-    sx={{ margin: 2 }}
-    >
+    <Box sx={{ margin: 2 }}>
       <Grid
         container
         direction="row"
@@ -99,7 +98,6 @@ const Home: React.FC = () => {
             xs: 1,
             md: 12,
           }}
-          
         >
           {forRent.map((property) => (
             <Grid item key={property.id} xs={12} md={4}>

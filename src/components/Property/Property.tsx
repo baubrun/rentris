@@ -54,7 +54,7 @@ const Property: React.FC<IProperty> = ({
             }}
           >
             <Box>
-              <Avatar variant="square" src={agency?.logo?.url} />
+              <Avatar src={agency?.logo?.url} />
             </Box>
 
             <Box

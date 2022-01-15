@@ -12,3 +12,17 @@ export interface IProperty {
     isVerified: boolean;
   };
 }
+
+
+export interface IPropertyQuery {
+  areaMax?: string;
+  bathsMin?: number;
+  categoryExternalID?: number;
+  locationExternalIDs?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  roomsMin?: number;
+  purpose?: string;
+  rentFrequency?: number;
+  sort?: string;
+}

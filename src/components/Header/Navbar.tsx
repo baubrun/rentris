@@ -24,6 +24,7 @@ const Navbar = () => {
 
     const handleClick = (path: string) => {
         history.replace(path)
+        handleClose()
     }
 
     return (
@@ -41,32 +42,32 @@ const Navbar = () => {
           'aria-labelledby': 'basic-button',
         }}
         >
-          <MenuItem >
-          <ListItemIcon onClick={() => handleClick("/")}>
+          <MenuItem onClick={() => handleClick("/")} >
+          <ListItemIcon >
             <HomeIcon fontSize="small" />
           </ListItemIcon>
           Home
         </MenuItem>
 
-        <MenuItem>
-        <ListItemIcon onClick={() => handleClick("/search")}>
+        <MenuItem onClick={() => handleClick("/search")}>
+        <ListItemIcon >
             <SearchIcon fontSize="small" />
           </ListItemIcon>
           Search
         </MenuItem> 
         
-        <MenuItem>
-        <ListItemIcon onClick={() => handleClick("/search?purpose=for-sale")}>
+        <MenuItem onClick={() => handleClick("/search?purpose=for-sale")}>
+        <ListItemIcon >
             <AddBusinessIcon fontSize="small" />
           </ListItemIcon>
-          Buy Home
+          To Buy
         </MenuItem>
 
-        <MenuItem>
-        <ListItemIcon onClick={() => handleClick("/search?purpose=for-rent")}>
+        <MenuItem onClick={() => handleClick("/search?purpose=for-rent")}>
+        <ListItemIcon >
             <BusinessIcon fontSize="small" />
           </ListItemIcon>
-          Rent Home
+          To Rent
         </MenuItem>
         
       </Menu>

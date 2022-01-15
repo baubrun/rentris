@@ -8,9 +8,16 @@ export const HOME_PAGE: INavigation = {
 }
 
 
+export const SEARCH_PAGE: INavigation = {
+    path: "/search",
+    render: lazy(() => import("../../components/pages/Search/Search")),
+}
+
+
 
 
 
 export const PAGES = [
     HOME_PAGE,
+    SEARCH_PAGE,
 ]

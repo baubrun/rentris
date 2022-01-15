@@ -3,19 +3,21 @@ import React, { Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Spinner from "./shared/components/Spinner/Spinner";
-import { HOME_PAGE  } from "./shared/constants/navigation";
+import { PAGES } from "./shared/constants/navigation";
 
 const App: React.FC<any> = () => {
-
-
   const routes = (
     <Suspense fallback={<Spinner show />}>
       <Switch>
-        <Route
-        exact
-          path={HOME_PAGE.path}
-          render={(p) => <HOME_PAGE.render {...p} />}
-        />
+        {PAGES.map((page) => (
+          <Route
+            key={page.path}
+            exact
+            path={page.path}
+            render={(p) => <page.render {...p} />}
+          />
+        ))}
+
         <Redirect to="/" />
       </Switch>
     </Suspense>

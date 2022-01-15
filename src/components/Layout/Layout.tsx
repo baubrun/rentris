@@ -11,27 +11,19 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 const Layout: React.FC<any> = (props) => {
-  const screenMobile: any = useMediaQuery((theme: any) => theme.breakpoints.up("sm"));
   const {
     toasterVisible,
     toasterMessage,
     toasterStatus,
     isLoading,
   } = useSelector((s: RootState) => s.layout);
-  const [offset, setOffset] = useState<boolean>(false)
 
-  useEffect(() => {
-    setOffset(screenMobile)
-  }, [screenMobile])
-
+ 
 
   return (
-    <Box
-      
-    >
+    <>
       <Header />
-      {offset && <Offset />}
-
+      <Offset id="offest"/>
       <Box id="main">{props.children}</Box>
       <Toaster
         show={toasterVisible}
@@ -39,7 +31,7 @@ const Layout: React.FC<any> = (props) => {
         status={toasterStatus}
       />
       <Spinner show={isLoading} />
-    </Box>
+    </>
   );
 };
 

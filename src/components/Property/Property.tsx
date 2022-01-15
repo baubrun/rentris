@@ -11,14 +11,11 @@ import BathtubIcon from "@mui/icons-material/Bathtub";
 import millify from "millify";
 import Grid4x4Icon from "@mui/icons-material/Grid4x4";
 import { numberFormat } from "../../shared/helpers";
-import { useTheme } from "@mui/material/styles";
-import { flexbox } from "@mui/system";
 
 const Property: React.FC<IProperty> = ({
   property: {
     coverPhoto,
     price,
-    rentFrequency,
     rooms,
     title,
     baths,
@@ -28,7 +25,6 @@ const Property: React.FC<IProperty> = ({
     externalID,
   },
 }) => {
-  const theme = useTheme();
 
   return (
     <Box sx={{ margin: 2 }}>
@@ -58,7 +54,7 @@ const Property: React.FC<IProperty> = ({
             }}
           >
             <Box>
-              <Avatar src={agency?.logo?.url} />
+              <Avatar variant="square" src={agency?.logo?.url} />
             </Box>
 
             <Box

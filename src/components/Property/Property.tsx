@@ -23,6 +23,7 @@ const Property: React.FC<IProperty> = ({
     agency,
     isVerified,
     externalID,
+    rentFrequency,
   },
 }) => {
 
@@ -73,6 +74,7 @@ const Property: React.FC<IProperty> = ({
                 <Typography variant="h5" sx={{ fontWeight: "bolder" }}>
                   {`AED ${numberFormat(price)} `}
                 </Typography>
+                <Typography sx={{textTransform: "capitalize"}}> {rentFrequency && `Rent Frequency: ${rentFrequency}`}</Typography>
               </Box>
             </Box>
           </Box>

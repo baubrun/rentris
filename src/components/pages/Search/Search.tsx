@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -13,46 +13,45 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import Property from "../../Property/Property";
 import propertyService from "../../../services/property";
 import {
-    hideLoader,
-    showLoader,
-    showToaster,
-  } from "../../../redux/layoutSlice";
-  import { STATUS_ERROR } from "../../../shared/constants/status";
-  import { propertyQuery } from "../../../services/helper";
-  import type { AppDispatch } from "../../../redux/store";
+  hideLoader,
+  showLoader,
+  showToaster,
+} from "../../../redux/layoutSlice";
+import { STATUS_ERROR } from "../../../shared/constants/status";
+import { propertyQuery } from "../../../services/helper";
+import type { AppDispatch, RootState } from "../../../redux/store";
 
 const Search: React.FC = () => {
   const theme = useTheme();
   const { search } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
-
+  const { isLoading } = useSelector((s: RootState) => s.layout);
   const [properties, setProperties] = useState<any[]>([]);
+  const [searchProperties, setSearchProperties] = useState<any>({});
+ 
+    const propertyType = search?.split("=")[1];
 
+  const getProperties = async () => {
+    try {
+      dispatch(showLoader());
+      const result = await propertyService.getProperties(
+        propertyQuery({ purpose: propertyType })
+      );
+      setProperties(result);
+    } catch (err: any) {
+      dispatch(
+        showToaster({
+          message: err?.response ? err?.response.data : err?.message,
+          status: STATUS_ERROR,
+        })
+      );
+    }
+    dispatch(hideLoader());
+  };
 
-    const propertyType = search?.split("=")[1]
-    
-    const getProperties = async () => {
-        try {
-          dispatch(showLoader());
-          const result = await propertyService.getProperties(
-            propertyQuery({ purpose: propertyType })
-          );
-          setProperties(result);
-        } catch (err: any) {
-          dispatch(
-            showToaster({
-              message: err?.response ? err?.response.data : err?.message,
-              status: STATUS_ERROR,
-            })
-          );
-        }
-        dispatch(hideLoader());
-      };
-    
-
-      useEffect(() => {
-          getProperties()
-      }, [])
+  useEffect(() => {
+    if (propertyType) getProperties();
+  }, [propertyType]);
 
   return (
     <>
@@ -71,20 +70,40 @@ const Search: React.FC = () => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <SearchFilter />
+          <SearchFilter 
+          searchProperties={searchProperties} 
+          setSearchProperties={setSearchProperties} />
         </AccordionDetails>
       </Accordion>
 
-      <Typography>{`Properties ${propertyType}`}</Typography>
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid item>
+          <Typography
+            variant="h5"
+            sx={{
+              marginTop: 2,
+              textTransform: "uppercase",
+              fontWeight: "bolder",
+            }}
+          >
+            {propertyType && `Properties ${propertyType}`}
+          </Typography>
+        </Grid>
+      </Grid>
 
       <Box>
         {properties?.map((p) => (
-          <Property property={p} />
+          <Property property={p} key={p?.id} />
         ))}
       </Box>
 
       <Box>
-        {properties?.length === 0 && (
+        {properties?.length === 0 && !isLoading && (
           <Grid
             container
             direction="row"

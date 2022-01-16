@@ -1,7 +1,6 @@
 import axios from "axios";
 import data from "../prac/data.json"
 
-// export const baseUrl = 'https://bayut.p.rapidapi.com';
 
 const getProperties = async (url: string) => {
     // const { data } = await axios.get(url, {

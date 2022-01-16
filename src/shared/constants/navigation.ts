@@ -13,11 +13,17 @@ export const SEARCH_PAGE: INavigation = {
     render: lazy(() => import("../../components/pages/Search/Search")),
 }
 
+export const PROPERTY_PAGE: INavigation = {
+    path: "/property/:id",
+    render: lazy(() => import("../../components/pages/Property/PropertyDetail")),
+}
+
 
 
 
 
 export const PAGES = [
     HOME_PAGE,
+    PROPERTY_PAGE,
     SEARCH_PAGE,
 ]

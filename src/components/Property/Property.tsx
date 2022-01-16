@@ -80,7 +80,6 @@ const Property: React.FC<IProperty> = ({
           </Box>
 
           <Box
-            id="asdf"
             sx={{
               padding: 1,
               textAlign: "center",

@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import Select from "@mui/material/Select";
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import { filterData } from "../../../prac/filterData";
 import { useTheme } from "@mui/material";
 
-const SearchFilter = (props: {searchProperties: any, setSearchProperties: (x: any) => void}) => {
+interface IProps {
+    searchProperties: any, 
+    setSearchProperties: (x: any) => void
+}
+
+const SearchFilter: React.FC<IProps> = (props) => {
   const theme = useTheme();
   const [filters] = useState<any>(filterData);
-    const {searchProperties, setSearchProperties} = props;
-  return (
+  const {searchProperties, setSearchProperties} = props;
+  
+    return (
     <>
       <Grid
         container

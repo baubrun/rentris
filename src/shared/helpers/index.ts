@@ -7,6 +7,6 @@ export const dateFormat = (date: string) => {
     return moment(date).format("LL") 
 }
 
-export const numberFormat = (num: number) => {
-    return millify(num, {precision: 2, decimalSeparator: ','})
+export const numberFormat = (num: any) => {
+    return millify(+num || 0, {precision: 2, decimalSeparator: ','})
 }

@@ -21,6 +21,7 @@ import { STATUS_ERROR } from "../../../shared/constants/status";
 import { propertyQuery } from "../../../services/helper";
 import type { AppDispatch, RootState } from "../../../redux/store";
 import { IPropertyQuery } from "../../../shared/models/property";
+import { parsePath } from "../../../shared/helpers";
 
 const Search: React.FC = () => {
   const theme = useTheme();
@@ -29,15 +30,14 @@ const Search: React.FC = () => {
   const { isLoading } = useSelector((s: RootState) => s.layout);
   const [properties, setProperties] = useState<any[]>([]);
   const [searchProperties, setSearchProperties] = useState<IPropertyQuery>({});
-  const [showLocations, setShowLocations] = useState<Boolean>(false);
 
-    const propertyType = search?.split("=")[1];
+  const propertyType = parsePath(search)
 
     useEffect(() => {
        setSearchProperties({ purpose: propertyType })
     }, [])
 
-  const getProperties = async () => {
+  const getProperties = async (searchProperties: IPropertyQuery) => {
     try {
       dispatch(showLoader());
       const result = await propertyService.getProperties(
@@ -57,7 +57,7 @@ const Search: React.FC = () => {
 
 
   useEffect(() => {
-    if (Object.keys(searchProperties).length) getProperties();
+    if (Object.keys(searchProperties)?.length) getProperties(searchProperties);
   }, [searchProperties]);
 
 

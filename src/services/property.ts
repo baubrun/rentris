@@ -18,12 +18,12 @@ const getProperties = async (url: string) => {
 
 const getPropertyDetail = async (id: string) => {
     // const { data } = await axios.get("https://bayut.p.rapidapi.com/properties/detail", {
-    //   params: {externalID: id},
-    //     headers: {
-    //       "x-rapidapi-host": host,
-    //       "x-rapidapi-key": key,
-    //     },
-    //   });
+      // params: {externalID: id},
+      //   headers: {
+      //     "x-rapidapi-host": host,
+      //     "x-rapidapi-key": key,
+      //   },
+      // });
     return detail
       // return data;
 };

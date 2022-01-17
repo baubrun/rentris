@@ -10,3 +10,7 @@ export const dateFormat = (date: string) => {
 export const numberFormat = (num: any) => {
     return millify(+num || 0, {precision: 2, decimalSeparator: ','})
 }
+
+export const parsePath = (path: string) => {
+    return path?.split("=")[1];
+}

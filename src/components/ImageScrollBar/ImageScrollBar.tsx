@@ -1,55 +1,49 @@
-import React, { useContext, useState } from "react";
-import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
-import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import IconButton from "@mui/material/IconButton";
-import Grid from "@mui/material/Grid";
+import React, { useState, useEffect } from "react";
+import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import Box from "@mui/material/Box";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { useMediaQuery } from "@mui/material";
 
-const LeftArrow = () => {
-  const { scrollPrev } = useContext(VisibilityContext);
-  return (
-    <Grid container direction="row" justifyContent="center" alignItems="center">
-      <Grid item>
-        <IconButton onClick={() => scrollPrev()}>
-          <KeyboardDoubleArrowLeftIcon />
-        </IconButton>
-      </Grid>
-    </Grid>
-  );
-};
 
-const RightArrow = () => {
-  const { scrollNext } = useContext(VisibilityContext);
-  return (
-    <Grid container direction="row" justifyContent="center" alignItems="center">
-      <Grid item>
-        <IconButton onClick={() => scrollNext()}>
-          <KeyboardDoubleArrowRightIcon />
-        </IconButton>
-      </Grid>
-    </Grid>
-  );
-};
+const initDimension: { height: number, width: number} = {
+  height: 400,
+  width: 400
+}
 
 const ImageScrollBar: React.FC<any> = ({ data }) => {
+  const screenMobile: any = useMediaQuery((theme: any) => theme.breakpoints.up("sm"));
+    const [dimension, setDimension] = useState(initDimension)
+
+
+    useEffect(() => {
+      if (screenMobile) setDimension({height: 650, width: 650})
+      else setDimension(initDimension)
+    }, [screenMobile])
+
   return (
     <Box>
-      <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+      <ScrollMenu>
         {data.map((item: any) => (
           <Box
-            sx={{ overflow: "hidden", padding: 1 }}
+            sx={{ 
+              overflow: "hidden", 
+              padding: 1,
+              height: dimension.height,
+              width: dimension.width,
+          }}
             itemID={item?.id}
             key={item?.id}
           >
             <LazyLoadImage
+            itemID={item?.id}
+            key={item?.id}
               alt=""
               effect="blur"
               src={item?.url}
-              height={650}
-              width={650}
+              height={dimension.height}
+              width={dimension.width}
+
             />
           </Box>
         ))}

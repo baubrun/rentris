@@ -40,6 +40,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     getProperties("for-sale", setForSale);
     getProperties("for-rent", setForRent);
+    
   }, []);
 
   return (

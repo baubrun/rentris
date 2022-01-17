@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "@mui/material/Select";
 import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import { filterData } from "../../../prac/filterData";
+import { filterData } from "./filterData";
 import { useTheme } from "@mui/material";
+import {useLocation} from "react-router-dom"
+import { parsePath } from "../../../shared/helpers";
 
 interface IProps {
     searchProperties: any, 
@@ -13,10 +15,16 @@ interface IProps {
 }
 
 const SearchFilter: React.FC<IProps> = (props) => {
-  const theme = useTheme();
-  const [filters] = useState<any>(filterData);
   const {searchProperties, setSearchProperties} = props;
-  
+  const theme = useTheme();
+  const {search} = useLocation()
+  const [filters] = useState<any>(filterData);
+  const [forSale, setForSale] = useState<boolean>(false)
+
+  useEffect(() => {
+    setForSale(parsePath(search) === "for-sale")
+  }, [search])
+
     return (
     <>
       <Grid
@@ -28,8 +36,9 @@ const SearchFilter: React.FC<IProps> = (props) => {
         rowSpacing={2}
         columnSpacing={2}
       >
-        {filters.map((f: any) => (
-          <Grid item key={f?.queryName}>
+        {filters.map((f: any) => {
+          return (
+            <Grid item key={f?.queryName}>
             <FormControl
               sx={{
                 minWidth: 200,
@@ -37,6 +46,7 @@ const SearchFilter: React.FC<IProps> = (props) => {
             >
               <InputLabel id="filter-select">{f?.placeholder}</InputLabel>
               <Select
+                disabled={forSale && f.queryName === "rentFrequency"}
                 fullWidth
                 label={f?.placeholder}
                 labelId="filter-select"
@@ -57,7 +67,11 @@ const SearchFilter: React.FC<IProps> = (props) => {
               </Select>
             </FormControl>
           </Grid>
-        ))}
+          )
+          }
+         
+        )}
+
       </Grid>
     </>
   );

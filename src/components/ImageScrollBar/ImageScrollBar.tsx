@@ -12,14 +12,14 @@ const initDimension: { height: number, width: number} = {
 }
 
 const ImageScrollBar: React.FC<any> = ({ data }) => {
-  const screenMobile: any = useMediaQuery((theme: any) => theme.breakpoints.up("sm"));
+  const isNotMobile: any = useMediaQuery((theme: any) => theme.breakpoints.up("sm"));
     const [dimension, setDimension] = useState(initDimension)
 
 
     useEffect(() => {
-      if (screenMobile) setDimension({height: 650, width: 650})
+      if (isNotMobile) setDimension({height: 650, width: 650})
       else setDimension(initDimension)
-    }, [screenMobile])
+    }, [isNotMobile])
 
   return (
     <Box>
@@ -36,8 +36,6 @@ const ImageScrollBar: React.FC<any> = ({ data }) => {
             key={item?.id}
           >
             <LazyLoadImage
-            itemID={item?.id}
-            key={item?.id}
               alt=""
               effect="blur"
               src={item?.url}

@@ -17,8 +17,6 @@ const Layout: React.FC<any> = (props) => {
     isLoading,
   } = useSelector((s: RootState) => s.layout);
 
- 
-
   return (
     <>
       <Header />

@@ -2,14 +2,12 @@ import React from "react";
 
 import AppBar from "@mui/material/AppBar";
 import CssBaseline from "@mui/material/CssBaseline";
-import { useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Navbar from "./Navbar";
 
 const Header: React.FC<any> = () => {
-  const theme = useTheme();
 
   return (
     <>

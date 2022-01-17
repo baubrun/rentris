@@ -3,8 +3,10 @@ import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { IBanner } from "../../shared/models/bannter";
+import { IBanner } from "../../shared/models/banner";
 import { Link } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const Banner: React.FC<IBanner> = ({
   purpose,
@@ -27,17 +29,20 @@ const Banner: React.FC<IBanner> = ({
           [theme.breakpoints.up("sm")]: {
             height: 500,
             width: 500,
-          }, 
+          },
           [theme.breakpoints.up("md")]: {
             height: "100%",
             width: "100%",
           },
         }}
       >
-        <img
-          src={imageUrl}
+        <LazyLoadImage
           alt=""
-          style={{ height: "100%", width: "100%", objectFit: "cover" }}
+          effect="blur"
+          src={imageUrl}
+          height={"100%"}
+          width={"100%"}
+          style={{ objectFit: "cover" }}
         />
       </Box>
 

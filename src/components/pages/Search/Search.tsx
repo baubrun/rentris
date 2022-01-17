@@ -30,16 +30,19 @@ const Search: React.FC = () => {
   const { isLoading } = useSelector((s: RootState) => s.layout);
   const [properties, setProperties] = useState<any[]>([]);
   const [searchProperties, setSearchProperties] = useState<IPropertyQuery>({});
+  const [loading, setLoading] = useState<boolean>(false);
+  const [filterDirty, setFilterDirty] = useState<boolean>(false);
 
-  const propertyType = parsePath(search)
+  const propertyType = parsePath(search);
 
-    useEffect(() => {
-       setSearchProperties({ purpose: propertyType })
-    }, [])
+  useEffect(() => {
+    setSearchProperties({ purpose: propertyType });
+  }, [propertyType]);
 
   const getProperties = async (searchProperties: IPropertyQuery) => {
     try {
-      dispatch(showLoader());
+      if (!filterDirty) dispatch(showLoader());
+      else setLoading(true);
       const result = await propertyService.getProperties(
         propertyQuery(searchProperties)
       );
@@ -52,14 +55,22 @@ const Search: React.FC = () => {
         })
       );
     }
-    dispatch(hideLoader());
+    if (!filterDirty) dispatch(hideLoader());
+    else {
+      setLoading(false);
+      setFilterDirty(false);
+    }
   };
 
-
   useEffect(() => {
-    if (Object.keys(searchProperties)?.length) getProperties(searchProperties);
+    getProperties(searchProperties);
   }, [searchProperties]);
 
+  const handleReset = () => {
+    if (Object.values(searchProperties)?.length <= 1) return;
+    setFilterDirty(true);
+    setSearchProperties({ purpose: propertyType });
+  };
 
   return (
     <>
@@ -73,14 +84,22 @@ const Search: React.FC = () => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography variant="h5" sx={{ fontWeight: "bolder" }}>
-            Search By FIlters
-          </Typography>
+          <Grid container alignItems="center" justifyContent="flex-start">
+            <Grid item>
+              <Typography variant="h5" sx={{ fontWeight: "bolder" }}>
+                Search By Filters
+              </Typography>
+            </Grid>
+          </Grid>
         </AccordionSummary>
         <AccordionDetails>
-          <SearchFilter 
-          searchProperties={searchProperties} 
-          setSearchProperties={setSearchProperties} />
+          <SearchFilter
+            handleReset={handleReset}
+            setFilterDirty={setFilterDirty}
+            searchProperties={searchProperties}
+            setSearchProperties={setSearchProperties}
+            loading={loading}
+          />
         </AccordionDetails>
       </Accordion>
 
@@ -111,7 +130,7 @@ const Search: React.FC = () => {
       </Box>
 
       <Box>
-        {properties?.length === 0 && !isLoading && (
+        {!properties?.length  && !isLoading && !loading && (
           <Grid
             container
             direction="row"
@@ -120,7 +139,7 @@ const Search: React.FC = () => {
             sx={{ marginY: 10 }}
           >
             <Grid item>
-              <Typography variant="h4" sx={{ textTransform: "uppercase" }}>
+              <Typography variant="h5" sx={{ textTransform: "uppercase" }}>
                 No results found
               </Typography>
             </Grid>

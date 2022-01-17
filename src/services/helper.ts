@@ -1,8 +1,6 @@
 import qs from "qs";
 import { IPropertyQuery } from "../shared/models/property";
 
-export const baseUrl = 'https://bayut.p.rapidapi.com';
-
 
 export const propertyQuery = (query: IPropertyQuery): string => {
     const q =  qs.stringify(
@@ -15,11 +13,11 @@ export const propertyQuery = (query: IPropertyQuery): string => {
             minPrice : query.minPrice || 0,
             maxPrice : query.maxPrice || 1000000,
             roomsMin : query.roomsMin || 0,
-            purpose : query.purpose || 'for-rent',
-            rentFrequency : query.rentFrequency || 'yearly',
-            sort : query.sort || 'price-desc',
+            purpose : query.purpose || "for-rent",
+            rentFrequency : query.rentFrequency || "yearly",
+            sort : query.sort || "price-desc",
         }
     )
-    return `${baseUrl}/properties/list?${q}`
+    return `${process.env.REACT_APP_BASE_URL}/properties/list?${q}`
 }
 

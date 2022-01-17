@@ -41,7 +41,7 @@ const ImageScrollBar: React.FC<any> = ({ data }) => {
               src={item?.url}
               height={dimension.height}
               width={dimension.width}
-
+              style={{ objectFit: "cover" }}
             />
           </Box>
         ))}

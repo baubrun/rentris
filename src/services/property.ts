@@ -12,7 +12,7 @@ const getProperties = async (url: string) => {
 };
 
 const getPropertyDetail = async (id: string) => {
-    const { data } = await axios.get(process.env.REACT_APP_BASE_URL!, {
+    const { data } = await axios.get(process.env.REACT_APP_DETAIL_URL!, {
       params: {externalID: id},
         headers: {
           "x-rapidapi-host": process.env.REACT_APP_RENTRIS_HOST!,
